@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thiệp Chúc Cô Cưới</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Great+Vibes&family=Roboto&display=swap");
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: linear-gradient(135deg, #f3a5f4, #b75cf6);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: "Roboto", sans-serif;
+      overflow-x: hidden;
+      padding: 15px;
+    }
+    .card-3d {
+      width: 90vw;
+      max-width: 400px;
+      min-height: 420px;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 15px 30px -10px rgba(139, 69, 19, 0.25), 0 0 0 1px rgba(255,255,255,0.1);
+      padding: 30px 25px;
+      text-align: center;
+      color: #a57cf2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.8s ease, opacity 0.8s ease;
+    }
+    .card-3d.open {
+      transform: scale(1.1);
+      opacity: 0;
+    }
+    .icon-envelope { font-size: 70px; margin-bottom: 15px; }
+    h1.great-vibes {
+      font-family: "Great Vibes", cursive;
+      font-size: 3rem;
+      margin-bottom: 10px;
+      color: #6b41d6;
+    }
+    .sub-text { font-size: 1.2rem; color: #c5a9f5; margin-bottom: 20px; }
+    .icon-ring { font-size: 40px; color: #50b7f6; margin-top: 10px; }
+    #toggle-music {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: #6b41d6;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 8px rgba(107,65,214,0.7);
+      z-index: 1000;
+      user-select: none;
+    }
+    #toggle-music svg { width: 18px; height: 18px; fill: white; }
+    #toggle-music:hover { background: #532bb0; }
+    .message {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0,0,0,0.7);
+      color: #fff;
+      font-size: 2rem;
+      font-family: "Great Vibes", cursive;
+      text-align: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1s ease;
+    }
+    .message.show { opacity: 1; pointer-events: all; }
+    @media (max-width: 350px) {
+      h1.great-vibes { font-size: 2.2rem; }
+      .sub-text { font-size: 1rem; }
+      .icon-envelope { font-size: 55px; }
+      .icon-ring { font-size: 32px; }
+      .card-3d { min-height: 380px; }
+    }
+  </style>
+</head>
+<body>
+  <button id="toggle-music" aria-label="Tắt/Bật nhạc">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 9v6h4l5 5V4L7 9H3zM16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+    </svg>
+    Bật nhạc
+  </button>
+
+  <div class="card-3d" role="button" aria-label="Nhấn để mở thiệp">
+    <div class="icon-envelope" aria-hidden="true">📩</div>
+    <h1 class="great-vibes">Thiệp Chúc Mừng Đám Cưới</h1>
+    <div class="sub-text">Nhấn để mở thiệp</div>
+    <div class="icon-ring" aria-hidden="true">💍</div>
+  </div>
+
+  <div class="message" id="message">Chúc cô và chú trăm năm hạnh phúc! ❤️</div>
+
+  <audio id="wedding-music" loop>
+    <source src="https://www.example.com/le-duong-hai-long-salim.mp3" type="audio/mpeg" />
+    Trình duyệt của bạn không hỗ trợ thẻ audio.
+  </audio>
+
+  <script>
+    const btn = document.getElementById("toggle-music");
+    const audio = document.getElementById("wedding-music");
+    let isPlaying = false;
+
+    btn.addEventListener("click", () => {
+      if (isPlaying) { audio.pause(); btn.textContent = "Bật nhạc"; }
+      else { audio.play(); btn.textContent = "Tắt nhạc"; }
+      isPlaying = !isPlaying;
+    });
+
+    window.addEventListener("load", () => {
+      audio.play().then(() => { btn.textContent = "Tắt nhạc"; isPlaying = true; }).catch(() => {});
+    });
+
+    const card = document.querySelector(".card-3d");
+    const message = document.getElementById("message");
+
+    card.addEventListener("click", () => {
+      card.classList.add("open");
+      setTimeout(() => {
+        message.classList.add("show");
+      }, 800);
+      audio.play().catch(()=>{});
+      btn.textContent = "Tắt nhạc";
+      isPlaying = true;
+    });
+  </script>
+</body>
+</html>
